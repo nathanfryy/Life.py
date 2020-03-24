@@ -1,0 +1,35 @@
+****************************************************************************************************
+****************************************************************************************************
+**                                                                                                **
+**                           **      **  ******  ******                                           **
+**                           **      **  ******  ******                                           **
+**                           **      **  **      **                                               **
+**                           **      **  ****    ****                                             **
+**                           **      **  ****    ****                                             **
+**                           **      **  **      **                                               **
+**                           ******  **  **      ******                                           **
+**                           ******  **  **      ******  Version 0.5                              **
+**                                                                                                **
+**    This program implements a cellular biology simulation. Each cell can have 8 neighboring     **
+**    cells. The state of a cell is determined by the number of neighbors that cell has:          **
+**                                                                                                **
+**       0 to 1 neighbors dies of lack of symbiotic nutrients                                     **
+**       2 to 3 neighbors lives comfortably                                                       **
+**       4 to 8 neighbors dies of over crowding                                                   **
+**       exactly 3 neighbors a new cell is generated                                              **
+**                                                                                                **
+**    You can use the following commands:                                                         **
+**                                                                                                **
+**       Next Generation    (N): displays the next generation of cell life                        **
+**       Run X Generations  (R): displays the next X generations of cell life                     **
+**       Skip X Generations (K): skip over the next X generations of cell life                    **
+**       New Random Gen     (E): redraws the screen with a random sample of cells                 **
+**       Fillrate           (F): changes the fill rate when generating a new world                **
+**       Delay              (D): changes the delay between generations                            **
+**       Size               (S): changes the dimensions of the world                              **
+**       Help               (H): displays this help screen                                        **
+**       Quit               (Q): quits the program                                                **
+**                                                                                                **
+**       Most commands will take parameters such as: r100   f25   d0.5   s20x100                  **
+****************************************************************************************************
+****************************************************************************************************

@@ -417,11 +417,18 @@ class Life(object):
 
     def from_library(self, filename, myPath= './'):
         Cell.set_display('basic')
-        allFiles = os.listdir(myPath)
-        for filenames in allFiles:
-            print(filenames)
-        if filename == None:
-            filename = toolbox.get_string('Which file do you want to open?')
+        files = []
+        number = 1
+        print('**************************************')
+        for file in os.listdir(myPath):
+            print(f'{number}: {file}')
+            files.append(file)
+            number += 1
+        print('**************************************')
+        prompt = 'Which file would you like to open? '
+        fileNumber = toolbox.get_integer_between(1, number - 1, prompt)
+        filename = files[fileNumber - 1]
+        print(filename)
         #
         # Check for and add the correct file extension.
         #

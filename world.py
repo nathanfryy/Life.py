@@ -388,7 +388,7 @@ class World(object):
         self.__livingCellCount = 0
         for row in self.__grid:
             for cell in row:
-                if random.randint(0, 100) <= percent:
+                if random.randint(1, 100) <= percent:
                     cell.set_living(True)
                     self.__livingCellCount += 1
                 else:

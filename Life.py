@@ -170,6 +170,7 @@ class Life(object):
             generations = toolbox.get_integer_between(1, 10000, prompt)
         for generation in range(generations):
             self.__world.next_generation()
+            self.__generation += 1
             if self.__world.is_stable() == True:
                 "It is stable now."
                 break
@@ -187,7 +188,7 @@ class Life(object):
         print(f'You have now been through {generations} generations. ')
         print()
         print(self.menu(), end=' ')
-        self.__generation += generations
+        #self.__generation += generations
 
     def skip_generations(self, parameter):
         """
@@ -202,7 +203,7 @@ class Life(object):
             generations = toolbox.get_integer_between(1, 10000, prompt)
         print(f'Skipping {generations} generations.', end='')
         for generation in range(generations):
-            self.__world.next_generation(self.__world)
+            self.__world.next_generation()
             if self.__world.is_stable() == True:
                 "It is stable now."
                 break

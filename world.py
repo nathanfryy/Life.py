@@ -379,20 +379,22 @@ class World(object):
 
 
 
-    def randomize(self, percent):
+    def randomize(self, percentage=50):
         """
         Randomly make each cell in the world alive based on the percent given.
         :param percent: Whatever percent the user chose to have living.
         :return: None
         """
-        self.__livingCellCount = 0
+        newGrid = self.create_grid()
         for row in self.__grid:
             for cell in row:
-                if random.randint(1, 100) <= percent:
-                    cell.set_living(True)
-                    self.__livingCellCount += 1
+                number = random.randint(1, 100)
+                if number <= percentage:
+                    newGrid[cell.get_row()][cell.get_column()].set_living(True)
                 else:
-                    cell.set_living(False)
+                    newGrid[cell.get_row()][cell.get_column()].set_living(False)
+        self.__grid = newGrid
+        self.create_neighbors()
 
     def save(self, filename):
         """
@@ -418,3 +420,6 @@ class World(object):
 
     def get_currentGeo(self):
         return self.__currentGeo
+
+    def get_grid(self):
+        return self.__grid

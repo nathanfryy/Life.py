@@ -1,6 +1,7 @@
 from world import World
 from cell import Cell
 from rule import Rule
+from time import sleep
 import time
 import toolbox
 import os
@@ -26,9 +27,8 @@ class Life(object):
         parameter = None
         while command != 'quit':
             if command == 'help':
-                self.help('help.txt', 'Press <return> to continue.')
-                print(self.__world, end="")
-                print(self.status() + '\n' + self.menu(), end=' ')
+                self.help('help.txt')
+                self.random()
             elif command == 'next generation':
                 self.next_generation(parameter)
             elif command == 'run simulation':
@@ -60,6 +60,8 @@ class Life(object):
                 self.from_library(parameter, './library/')
             elif command == 'change rules':
                 self.change_rule(parameter)
+
+            self.menu()
 
             command, parameter = self.get_command()
         print('goodbye')
@@ -115,15 +117,15 @@ class Life(object):
         :return: string
         """
         geometry = self.__world.get_currentGeo()
-        #ruleSet = Rule.__current
+        #ruleSet = Rule.__currentRuleSet
         rows = self.__world.get_rows()
         columns = self.__world.get_columns()
-        percentAlive = (self.__world.get_living_cell_count() / (rows * columns)) * 100
+        percentAlive = self.find_percentage()
         speed = self.__delay
         generation = self.__generation
         string = 'Status:   '
         string += f'size:[{rows}x{columns}]      '
-        string += f'alive: {percentAlive:0.0f}%      '
+        string += f'alive: {percentAlive}%      '
         string += f'speed: 1 gen every {speed} seconds     '
         string += f'generation: {generation}    '
         string += f'geometry: {geometry}    '
@@ -141,7 +143,8 @@ class Life(object):
             help = file.read()
         print(help, end='')
         if prompt:
-            input('\n'+prompt)
+            input('\n' + prompt)
+        hi = input("\n\npress <return> to continue")
 
     def next_generation(self, parameter):
         """
@@ -225,18 +228,19 @@ class Life(object):
 
     def change_fillrate(self, parameter):
         """
-        Change the fillrate for the simulation.
-        :param parameter:
-        :return: None
+        Takes percentage from user on how much of the cells in the world are alive
+        :param parameter: percent of cells alive to advance if user specifies in menu
+        :return:
         """
-        if toolbox.is_number(parameter) and 0 <= float(parameter) <= 100:
-            fillrate = float(parameter)
+        if parameter:
+            self.__world.randomize(int(parameter))
         else:
-            prompt = 'What percent of cells should be alive?'
-            fillrate = toolbox.get_integer_between(0,100,prompt)
-        self.__fillrate = fillrate
-        self.random()
-        print(f'The percent of alive cells is now {fillrate} percent.')
+            self.__world.randomize(self.get_percentage())
+        sleep(2)
+        print(f"\nFillrate changed to {self.__percentage}%")
+        self.__generation = 0
+        print(self.__world)
+        print(self.status() + '\n' + self.menu(), end=' ')
 
     def change_delay(self, parameter):
         """
@@ -311,10 +315,11 @@ class Life(object):
                 rows = int(rows)
                 columns = int(columns)
         else:
+            print("You cannot choose 1 for rows or columns.")
             prompt = 'How many rows of cells?'
-            rows = toolbox.get_integer_between(1,40,prompt)
+            rows = toolbox.get_integer_between(2,40,prompt)
             prompt = 'How many cells in each row?'
-            columns = toolbox.get_integer_between(1,120,prompt)
+            columns = toolbox.get_integer_between(2,120,prompt)
         self.__world = World(rows, columns)
         self.random()
         print(self.__world, end='')
@@ -369,6 +374,14 @@ class Life(object):
             print(self.__world, end='')
         print()
         print(self.status() + '\n' + self.menu(), end=' ')
+
+    def get_percentage(self):
+        """
+        gets a number as a percent from the user
+        :return: the percentage inputted
+        """
+        self.__percentage = toolbox.get_integer_between(1, 100, "What percent of cells do you want alive? (just enter integer) ")
+        return self.__percentage
 
 
     def open(self, filename, myPath='./'):
@@ -455,6 +468,32 @@ class Life(object):
             print(f'You now opened {filename} world.')
             print()
         print(self.status() + '\n' + self.menu(), end=' ')
+
+    def get_alive(self):
+        """
+        calculates the number of cells alive in the current world
+        :return: returns the number of alive cells
+        """
+        alive = 0
+        for row in self.__world.get_grid():
+            for cell in row:
+                if cell.get_living():
+                    alive += 1
+        return alive
+
+    def get_total(self):
+        """
+        calculates the total number of cells in the world
+        :return: the total number of cells in the world
+        """
+        return (self.__world.get_rows())*(self.__world.get_columns())
+
+    def find_percentage(self):
+        """
+        gets the number of living cells and dead cells and divides them then times by 100
+        :return: percentage of Living cells
+        """
+        return round((self.get_alive()/self.get_total())*(100))
 
     def change_rule(self, parameter):
         """

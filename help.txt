@@ -24,9 +24,17 @@
 **       Run X Generations  (R): displays the next X generations of cell life                     **
 **       Skip X Generations (K): skip over the next X generations of cell life                    **
 **       New Random Gen     (E): redraws the screen with a random sample of cells                 **
+**       Custom             (C): gives you a sub menu of more options                             **
 **       Fillrate           (F): changes the fill rate when generating a new world                **
 **       Delay              (D): changes the delay between generations                            **
 **       Size               (S): changes the dimensions of the world                              **
+**       Geometry           (G): gives you the option to make the cells drift to other side       **
+**       Change Rules       (A): gives you options oo change the logic of living and dead cells   **
+**       Display            (I): lets you change what cells look like                             **
+**       Save               (V): lets you save the current world to a file for later              **
+**       Load               (O): lest you open previous worlds you have saved                     **
+**       Custom Display     (U): lest you input what you want cells to look like                  **
+**       Library            (B): gives you options to open worlds that are preset                 **
 **       Help               (H): displays this help screen                                        **
 **       Quit               (Q): quits the program                                                **
 **                                                                                                **

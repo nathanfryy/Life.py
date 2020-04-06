@@ -41,4 +41,3 @@ class Rule(object):
 
     def get_ruleSet(self):
         return self.__currentRuleSet
-
